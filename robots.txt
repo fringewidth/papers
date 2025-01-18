@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fringewidth.github.io/papers/sitemap.xml
