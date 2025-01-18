@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Explore how graph theory revolutionizes dimensionality reduction by modeling dataset features as a graph to streamline big data efficiently.">
+    <meta name="keywords"
+        content="graph theory, dimensionality reduction, data science, machine learning, feature selection, PCA alternative">
+    <meta name="author" content="Hrishik Sai Bojnal">
+    <title>Using Graph Theory for Dimensionality Reduction</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Using Graph Theory for Dimensionality Reduction</h1>
+        <p class="subtitle">A fresh perspective on streamlining datasets with precision and efficiency.</p>
+
+        <div class="buttons">
+            <a href="https://ieeexplore.ieee.org/document/10817068/" target="_blank" class="button">View on IEEE
+                Xplore</a>
+            <a href="./pdf/Dimensionality_Reduction_via_Graph-based_Feature_Selection.pdf" target="_blank"
+                class="button">Download PDF</a>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <p>Dimensionality reduction sounds intimidating, doesn’t it? Imagine having a library with thousands of
+                books but only needing a few to tell the entire story. Now, replace books with data features, and you’ve
+                got the crux of dimensionality reduction—a way to streamline massive datasets without losing the essence
+                of the information.</p>
+            <p>But here’s the twist: Instead of relying on the usual suspects like <a
+                    href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">PCA (Principal
+                    Component Analysis)</a>,
+                we’re turning to <a href="https://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>
+                for a solution. Yes, you heard it right—graphs aren’t just for social
+                networks and roadmaps; they’re taking center stage in data science. Let’s unpack how this works.</p>
+        </section>
+
+        <section>
+            <h2>The Graphy Part</h2>
+            <p>Every feature in a dataset is treated as a vertex in a graph. Then, we calculate the <a
+                    href="https://en.wikipedia.org/wiki/Coefficient_of_determination" target="_blank">
+                    <span class="math">R<sup>2</sup></span> score
+                </a> (a statistical measure of how well one feature predicts
+                another) for every pair of features. If the <span class="math">R<sup>2</sup></span> score between two
+                features exceeds a certain threshold, we draw an edge between their corresponding vertices. Voilà! Your
+                data is now a graph.
+            </p>
+            <p>The magic happens next. Some vertices—called <strong><a href="https://en.wikipedia.org/wiki/Cut_vertex"
+                        target="_blank">cut vertices</a></strong>—are crucial to holding the
+                graph together. Removing one would split the graph into disconnected parts. These cut vertices represent
+                the features essential to the dataset's structure. All the other vertices? Redundant fluff we can snip
+                away.</p>
+        </section>
+
+        <section>
+            <h2>Why Cut Vertices?</h2>
+            <p>Cut vertices are like the linchpins of your data’s story. They ensure the graph (and by extension, your
+                dataset) doesn’t fall apart when simplified. This makes them perfect candidates for feature selection,
+                as they preserve the integrity of your data while stripping away redundancies.</p>
+        </section>
+
+        <section>
+            <h2>Graphs vs. PCA: The Ultimate Showdown</h2>
+            <p>PCA is the veteran of dimensionality reduction. It combines features into a smaller number of composite
+                variables, which sounds great—until you realize those composites are tough to interpret. On the other
+                hand, the graph-based method doesn’t create Frankenstein-like combinations. Instead, it keeps the
+                essential features intact and discards the rest.</p>
+            <p>When tested on a real-world dataset about climate patterns, the graph-based method reduced feature count
+                by nearly half, retaining predictive accuracy better than PCA. The model trained on the reduced dataset
+                scored an impressive <span class="math">R<sup>2</sup></span> value of 0.939—far outshining PCA’s 0.85.
+            </p>
+        </section>
+
+        <section>
+            <h2>Why It Matters</h2>
+            <p>Big data is only getting bigger. As datasets balloon in size, choosing the right tools to manage them
+                becomes critical. The graph-based approach is computationally efficient and intuitive, making it a
+                strong contender for real-world applications like weather forecasting, genomics, and even your favorite
+                recommendation algorithms.</p>
+            <p>For further reading, check out the full <a
+                    href="./pdf/Dimensionality_Reduction_via_Graph-based_Feature_Selection.pdf" target="_blank">research
+                    paper</a> or view its <a href="https://ieeexplore.ieee.org/document/10817068/"
+                    target="_blank">publication on IEEE Xplore</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Hrishik Sai Bojnal. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
