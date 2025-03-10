@@ -28,8 +28,8 @@
     </header>
 
     <main>
+        <img src="./img/the-graph-theory-solution.png" alt="Flowchart of the graph theory solution">
         <section>
-            <img src="img/the-graph-theory-solution.png" alt="Flowchart of the graph theory solution">
             <p>Dimensionality reduction sounds intimidating, doesn’t it? Imagine having a library with thousands of
                 books but only needing a few to tell the entire story. Now, replace books with data features, and you’ve
                 got the crux of dimensionality reduction—a way to streamline massive datasets without losing the essence
@@ -46,14 +46,15 @@
             <h2>The Graphy Part</h2>
             <p>Every feature in a dataset is treated as a vertex in a graph. Then, we calculate the <a
                     href="https://en.wikipedia.org/wiki/Coefficient_of_determination" target="_blank">
-                    <span class="math">R<sup>2</sup></span> score
-                </a> (a statistical measure of how well one feature predicts
+                    <span class="math">R<sup>2</sup></span> score</a> (a statistical measure of how well one feature
+                predicts
                 another) for every pair of features. If the <span class="math">R<sup>2</sup></span> score between two
                 features exceeds a certain threshold, we draw an edge between their corresponding vertices. Voilà! Your
                 data is now a graph.
             </p>
-            <p>The magic happens next. Some vertices—called <strong><a href="https://en.wikipedia.org/wiki/Cut_vertex"
-                        target="_blank">cut vertices</a></strong>—are crucial to holding the
+            <p>The magic happens next. Some vertices—called <strong><a
+                        href="https://mathworld.wolfram.com/VertexCut.html" target="_blank">cut
+                        vertices</a></strong>—are crucial to holding the
                 graph together. Removing one would split the graph into disconnected parts. These cut vertices represent
                 the features essential to the dataset's structure. All the other vertices? Redundant fluff we can snip
                 away.</p>
@@ -84,11 +85,14 @@
                 becomes critical. The graph-based approach is computationally efficient and intuitive, making it a
                 strong contender for real-world applications like weather forecasting, genomics, and even your favorite
                 recommendation algorithms.</p>
-            <p>For further reading, check out the full <a
-                    href="./pdf/Dimensionality_Reduction_via_Graph-based_Feature_Selection.pdf" target="_blank">research
-                    paper</a> or view its <a href="https://ieeexplore.ieee.org/document/10817068/"
-                    target="_blank">publication on IEEE Xplore</a>.</p>
         </section>
+        <p>For further reading, check out the full <a
+                href="./pdf/Dimensionality_Reduction_via_Graph-based_Feature_Selection.pdf" target="_blank">research
+                paper</a> or view its <a href="https://ieeexplore.ieee.org/document/10817068/"
+                target="_blank">publication on IEEE Xplore</a>. If you prefer a quick overview, find the conference
+            slides
+            <a href="./pdf/Dimensionality_Reduction_via_Graph-based_Feature_Selection._SLIDES.pdf" target="_blank">here</a>.
+        </p>
     </main>
 
     <footer>
