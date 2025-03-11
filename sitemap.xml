@@ -1,21 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>https://fringewidth.github.io/papers/Graph-Theory-Dimensionality-Reduction.html</loc>
-  <lastmod>2025-01-18T06:04:31+00:00</lastmod>
-  <priority>1.00</priority>
+<loc>https://fringewidth.github.io/papers/</loc>
+<lastmod>2025-03-11T02:34:35+00:00</lastmod>
+<priority>1.00</priority>
 </url>
 <url>
-  <loc>https://fringewidth.github.io/papers/pdf/Dimensionality_Reduction_via_Graph-based_Feature_Selection.pdf</loc>
-  <lastmod>2025-01-18T06:04:31+00:00</lastmod>
-  <priority>1.00</priority>
+<loc>https://fringewidth.github.io/papers/Anonymize-Hospital-Locations.html</loc>
+<lastmod>2025-03-11T02:34:35+00:00</lastmod>
+<priority>0.80</priority>
 </url>
-
-
+<url>
+<loc>https://fringewidth.github.io/papers/Graph-Theory-Dimensionality-Reduction.html</loc>
+<lastmod>2025-03-11T02:34:35+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://fringewidth.github.io/papers/pdf/Privacy_Preservation_of_Cluster_Integrity_on_Web-Scraped_Hospital_Data.pdf</loc>
+<lastmod>2025-03-11T02:34:35+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://fringewidth.github.io/papers/pdf/Privacy_Preservation_of_Cluster_Integrity_on_Web-Scraped_Hospital_Data_SLIDES.pdf</loc>
+<lastmod>2025-03-11T02:34:35+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://fringewidth.github.io/papers/pdf/Dimensionality_Reduction_via_Graph-based_Feature_Selection.pdf</loc>
+<lastmod>2025-03-11T02:34:35+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://fringewidth.github.io/papers/pdf/Dimensionality_Reduction_via_Graph-based_Feature_Selection._SLIDES.pdf</loc>
+<lastmod>2025-03-11T02:34:35+00:00</lastmod>
+<priority>0.64</priority>
+</url>
 </urlset>
