@@ -1,3 +1,7 @@
+:root {
+  --transition-duration: 0.3s;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
 
 body {
@@ -20,6 +24,7 @@ header {
 header h1 {
   margin: 0;
   font-size: 2.5em;
+  
 }
 
 header .subtitle {
@@ -62,13 +67,61 @@ main p {
   text-decoration: none;
   color: #090909;
   background-color: #ffffff;
-  padding: 10px 20px;
+  padding: 11px 21px;
   border-radius: 100px;
   font-size: 1em;
   margin-right: 10px;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  transition: background-color var(--transition-duration),
+    color var(--transition-duration), border-color var(--transition-duration);
   font-weight: bold;
-  border: 2px solid #090909;
+  border: 1px solid #090909;
+}
+
+.standing {
+}
+
+.floating {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating.button {
+  padding: 10px;
+}
+
+.rounded-square {
+  border-radius: 30%;
+}
+
+.floating img {
+  width: 24px;
+  height: 24px;
+  margin: auto;
+  transition: filter var(--transition-duration);
+}
+
+.floating:hover img {
+  filter: invert(1);
+}
+@media (max-width: 768px) {
+  .floating img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating img {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .button:hover {
@@ -175,7 +228,7 @@ footer p {
 }
 
 .hero {
-  background-image: url("./hero-image.jpg");
+  background-image: url("./img/hero-image.jpg");
   background-size: cover;
   background-position: 50% 45%;
   color: #ffffff;
