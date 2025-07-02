@@ -30,9 +30,9 @@
         <section>
             <img src="./img/anonymizing-hospitals.png" alt="Anonymize locations of anything by clustering">
             <h2>The Privacy Problem No One Talks About</h2>
-            <p>Web scraping is like a digital treasure hunt—researchers collect massive amounts of data from online
+            <p>Web scraping is like a digital treasure hunt. Researchers collect massive amounts of data from online
                 sources, including hospital locations and ratings. This data is gold for analyzing healthcare
-                accessibility, but there’s a catch: we can’t just go around sharing exact hospital locations without
+                accessibility, but there's a catch. We can't just go around sharing exact hospital locations without
                 running into privacy concerns.</p>
             <p>What if we could blur out the exact spots while keeping the big picture intact? Our research achieves
                 that by clustering hospitals based on their "influence" and shifting their coordinates without messing
@@ -41,7 +41,7 @@
 
         <section>
             <h2>How Do We Anonymize a Hospital?</h2>
-            <p>Here’s where things get clever. We figured out a way to measure how much a hospital matters using a well
+            <p>Here's where things get clever. We figured out a way to measure how much a hospital matters using a well
                 defined <strong>influence metric</strong>, that we choes to be dependent on:</p>
             <ul>
                 <li><strong>Google Maps Ratings (linearly)</strong>: A five-star hospital packs more influence than a
@@ -54,7 +54,8 @@
         <section>
             <h2>Clusters: The Secret to Anonymization</h2>
             <p>Instead of scrambling hospitals randomly (which would completely ruin the data), we identified
-                <strong>natural clusters</strong>—groups of hospitals that dominate certain regions. We did this by:
+                <strong>natural clusters</strong>. These are groups of hospitals that dominate certain regions. We did
+                this by:
             </p>
             <ol>
                 <li>Suppressing the lower 50% of influence values.</li>
@@ -92,7 +93,7 @@
         <section>
             <h2>The Takeaway: Anonymization Without Annihilation</h2>
             <p>Our method is a game-changer for sharing location-based healthcare data without violating privacy. The
-                same technique can be applied to restaurants, schools, or even wildlife habitats—anywhere location
+                same technique can be applied to restaurants, schools, wildlife habitats or anywhere location
                 privacy matters.</p>
 
         </section>
@@ -101,7 +102,7 @@
             <h2>Beyond Hospitals: Anonymizing Anything</h2>
             <p>
 
-                Let's face it—hospitals aren't the only places where location data is both valuable and sensitive. The
+                Let's face it. Hospitals aren't the only places where location data is both valuable and sensitive. The
                 beauty of our influence-based clustering approach is that it's incredibly adaptable. Just swap out the
                 influence metric, and you can apply this to virtually any location-based dataset.
                 Consider these real-world applications that are begging for better anonymization:
@@ -118,7 +119,7 @@
                     security.
                 </li>
                 <li>
-                    <strong>Rare Species Habitats:</strong> Ecologists tracking endangered species face a dilemma—they
+                    <strong>Rare Species Habitats:</strong> Ecologists tracking endangered species face a dilemma. They
                     need
                     to
                     share findings
@@ -132,7 +133,8 @@
                 <li>
                     <strong>Vaccine Distribution Centers:</strong> During public health crises, understanding vaccine
                     accessibility is
-                    crucial—but so is preventing targeted disruption. Our method could preserve the overall distribution
+                    crucial, but so is preventing targeted disruption. Our method could preserve the overall
+                    distribution
                     pattern
                     while protecting individual facilities.
                 </li>
@@ -145,15 +147,16 @@
                 </li>
             </ol>
             <p>
-                The applications are endless—anywhere data scientists need to balance location transparency with privacy
+                The applications are endless: anywhere data scientists need to balance location transparency with
+                privacy
                 concerns, this approach offers a path forward. By customizing the influence metric to what matters in
                 your
-                field, you're not just anonymizing data—you're preserving its soul while protecting its subjects.
+                field, you're not just anonymizing data. You're preserving its soul while protecting its subjects.
                 What makes this approach so powerful isn't just its effectiveness, but its simplicity. With basic
                 clustering
                 algorithms and a thoughtful influence metric, organizations can implement this technique without
                 specialized
-                tools or expertise. It's anonymization made accessible—and that's something work sharing.
+                tools or expertise. It's anonymization made accessible, and that's something worth sharing.
             </p>
             </p>
         </section>
