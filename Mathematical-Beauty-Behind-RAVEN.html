@@ -71,9 +71,12 @@
                 feature do we lose?</em></p>
         <p><strong>Theorem (Transitive Correlation)</strong>: For any two features Xᵢ and Xᵢ₊ₖ in a feature chain, their
             squared correlation satisfies $\rho_{i,i+k}^2 = \Omega(\tau^k)$.</p>
-        <p><em>(If you need a refresher from algorithms class, the <a
-                    href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/big-big-omega-notation">Omega
-                    notation</a> is the asymptotic lower bound.)</em></p>
+        <p><em>(If you need a quick refresher from algorithms class, 
+the <a href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/big-big-omega-notation">
+Omega notation</a> describes a lower limit on how fast a function can grow. 
+In other words, $f(x) = \Omega(g(x))$ means that beyond a certain point, 
+$f(x)$ stays at least as large as some constant times $g(x)$.)</em></p>
+
         <p>The theorem essentially says that correlation decays <strong>exponentially</strong> with chain length, but in
             a <em>bounded</em> way controlled by τ. Let&#39;s see why this is true.</p>
         <h2 id="the-proof-how-the-dominoes-fall-">The Proof: How the dominoes fall!</h2>
@@ -83,8 +86,8 @@
             by construction.</p>
         <h3 id="inductive-step">Inductive Step</h3>
         <p>Assume the theorem holds for some distance m ≥ 2: $\rho_{i,i+m}^2 = \Omega(\tau^m)$
-            . We need to show it holds for m+1.</p>
-        <p>We start with a surprisingly less known result from <a href="doi.org/10.1198/000313001753272286">Langford
+            . We need to show it holds for m+1. That is, $\rho_{i,i+m+1}^2 = \Omega(\tau^{m+1})$ </p>
+        <p>We start with a surprisingly less known result from <a href="https://doi.org/10.1198/000313001753272286">Langford
                 (2001)</a> on correlation bounds. For three random variables X, Y, Z:</p>
         <p>
             $$\rho_{XZ} \ge \rho_{XY} \cdot \rho_{YZ} - \sqrt{(1 - \rho_{XY}^2)(1 - \rho_{YZ}^2)}$$
