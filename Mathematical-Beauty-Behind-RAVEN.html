@@ -40,21 +40,51 @@
     </header>
 
     <main>
+        <p>RAVEN (Redundancy Analysis via Elimination Networks) is a feature selection algorithm that achieves something
+            remarkable: it reduces high-dimensional datasets by 41-69% while maintaining or even <em>improving</em>
+            model performance. On ClimSim, a climate modeling dataset with 556 features, RAVEN eliminated 228 features
+            while preserving R² scores for temperature predictions. On the UCI SECOM dataset, it improved classification
+            ROC AUC from 0.54 (with PCA) to 0.97. For RNA sequencing data with 35,238 genes, it achieved a 69% reduction
+            while maintaining a silhouette score of 0.9845.</p>
 
+        <p>These results seem almost too good to be true. How can we throw away so much data and lose so little, or
+            sometimes even gain predictive power?</p>
+
+        <p>While it started as a solution to make ClimSim small enough to fit on my laptop&#39;s RAM, the answer lies in
+            an interesting mathematical proof that brings the perfect world of graph theory to the imperfections of
+            real-world machine learning. This post walks you through that.</p>
+
+        <h2 id="r-scores-and-information-loss">R² Scores and Information Loss</h2>
+
+        <p>The <a href="https://en.wikipedia.org/wiki/Coefficient_of_determination"> coefficient of determination</a>
+            (R²
+            score) between two features measures their shared information. When two features have R² = 0.99, one
+            explains 99% of the other&#39;s variance. In other words, they&#39;re nearly redundant. So what happens when
+            there are three
+            features? If A explains 99% of B&#39;s variance, and B explains 50% of C&#39;s variance, what can be said
+            about the relationship between A and C?</p>
+
+        <p>It turns out that correlation is <strong>non-transitive</strong>. We can&#39;t simply conclude
+            that A correlates strongly with C. This makes multi-feature redundancy analysis treacherous.</p>
 
         <p>RAVEN is a <strong>threshold-based</strong> algorithm that transforms this seemingly intractable problem into
             one with provable guarantees. By requiring all pairwise correlations in a feature chain (i.e., A→B→C) to
             exceed a high threshold $t$ (typically &gt; 0.95), we can bound information decay across the chain.</p>
+
         <h2 id="feature-chains-and-correlation-decay">Feature Chains and Correlation Decay</h2>
+
         <p>Let's formalize this. A <strong>feature chain</strong> is a sequence X₁, X₂, ..., Xₙ where adjacent
             features have squared correlation $r_{i,i+1}^2 \ge t$ for some threshold $t$ &gt; 1 - ε (where ε is small,
             like
             0.01),
             and all correlations have the same sign.</p>
+
         <p>The main question is: <em>If we only keep the first feature in a chain, how much information about the last
                 feature do we lose?</em></p>
+
         <p><strong>Theorem (Transitive Correlation)</strong>: For any two features Xᵢ and Xᵢ₊ₖ in a feature chain, their
             squared correlation satisfies $r_{i,i+k}^2 = \Omega(t^k)$.</p>
+
         <p><em>(If you need a quick refresher from algorithms class,
                 the <a
                     href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/big-big-omega-notation">
@@ -64,16 +94,21 @@
 
         <p>The theorem essentially says that correlation decays <strong>exponentially</strong> with chain length, but in
             a <em>bounded</em> way controlled by $t$. Let's see why this is true.</p>
+
         <h2 id="the-proof-how-the-dominoes-fall-">The Proof: How the dominoes fall!</h2>
+
         <p>We use everyone's favourite proof method: induction.</p>
+
         <h3 id="base-case">Base Case</h3>
+
         <p>For k = 1, the result is immediate from the definition: $r_{i,i+1}^2 \ge t$
             by construction. Since $t^1 = t$, we have $r_{i,i+1}^2 \ge t^1$. This fits the definition of
             $\Omega(t^1)$ (with a constant of 1).</p>
+
         <h3 id="inductive-step">Inductive Step</h3>
+
         <p>Assume the theorem holds for some distance m ≥ 2: $r_{i,i+m}^2 = \Omega(t^m)$
             . We need to show it holds for m+1.</p>
-
 
         <p>
             By the formal definition of Big-Omega notation, our assumption $r_{i,i+m}^2 = \Omega(t^m)$ means that
@@ -84,49 +119,60 @@
         </p>
         </p>
 
-        <p>We start with a surprisingly less known result from <a href="doi.org/10.1198/000313001753272286">Langford
+        <p>We start with a surprisingly less known result from <a
+                href="https://doi.org/10.1198/000313001753272286">Langford
                 (2001)</a> on correlation bounds. For three random variables X, Y, Z:</p>
+
         <p>
             $$r_{XZ} \ge r_{XY} \cdot r_{YZ} - \sqrt{(1 - r_{XY}^2)(1 - r_{YZ}^2)}$$
         </p>
 
         <p>This inequality gives us a lower bound on the correlation between X and Z through an intermediary Y. Applying
             this to our chain at position $i$, $i+m$, and $i+m+1$ (where $X=X_i$, $Y=X_{i+m}$, $Z=X_{i+m+1}$):</p>
+
         <p>$$r_{i,i+m+1} \ge r_{i,i+m} \cdot r_{i+m,i+m+1}$$
             $$- \sqrt{(1 - r_{i,i+m}^2)(1 -
             r_{i+m,i+m+1}^2)}$$</p>
+
         <p>Now the rather clever part. We will analyze the two terms on the right side separately.</p>
 
         <p><strong>1. The Main Term: </strong> $r_{i,i+m} \cdot r_{i+m,i+m+1}$ </p>
+
         <p>By the inductive hypothesis, we just established $r_{i,i+m}^2 \ge c_1 t^m$. Taking the square root
             gives $\lvert r_{i,i+m} \rvert \ge \sqrt{c_1 t^m}$.</p>
+
         <p>By the feature chain definition, $r_{i+m,i+m+1}^2 \ge t$, so $\lvert r_{i+m,i+m+1} \rvert \ge
             \sqrt{t}$.</p>
+
         <p>Since the definition of a feature chain also requires all correlations to have the <strong>same
                 sign</strong>, we can multiply them without worrying about the absolute value signs changing the
             direction of the inequality:</p>
-        <p>$$r_{i,i+m} \cdot r_{i+m,i+m+1} \ge \sqrt{c_1 t^m} \cdot \sqrt{t} = \sqrt{c_1} t^{(m+1)/2}$$
-        </p>
-        <p>We can call $\sqrt{c_1}$ a new constant, $c_1'$.</em>
-        </p>
+
+        <p>$$r_{i,i+m} \cdot r_{i+m,i+m+1} \ge \sqrt{c_1 t^m} \cdot \sqrt{t} = \sqrt{c_1} t^{(m+1)/2}$$</p>
+
+        <p>We can call $\sqrt{c_1}$ a new constant, $c_1'$.</em></p>
 
         <p><strong>2. The "Penalty" Term: $\sqrt{(1 - r_{i,i+m}^2)(1 - r_{i+m,i+m+1}^2)}$</strong></p>
+
         <p>We need to find an <em>upper bound</em> for this term (since it's being subtracted). We use our two known
             inequalities:</p>
+
         <ul>
             <li>From our hypothesis: $r_{i,i+m}^2 \ge c_1 t^m \implies -r_{i,i+m}^2 \le -c_1 t^m \implies (1
                 - r_{i,i+m}^2) \le (1 - c_1 t^m)$</li>
             <li>From the chain definition: $r_{i+m,i+m+1}^2 \ge t \implies -r_{i+m,i+m+1}^2 \le -t \implies
                 (1 - r_{i+m,i+m+1}^2) \le (1 - t)$</li>
         </ul>
+
         <p>Plugging these upper bounds into the square root, we get:</p>
+
         <p>$$\sqrt{(1 - r_{i,i+m}^2)(1 - r_{i+m,i+m+1}^2)} \le \sqrt{(1 - c_1 t^m)(1 - t)}$$</p>
 
         <p>Now, let's look at each term in the right hand side. We are given that $t$ is very close to 1. Formally,
             $t > 1 -
             \varepsilon$ for a small $\varepsilon$ (like 0.05).
-
         </p>
+
         <ol>
             <li><strong>Bound for $(1 - t)$</strong>: This is the easy part. Since $t > 1 - \varepsilon$, we can
                 just rearrange the inequality to get $1 - t < \varepsilon$.</li>
@@ -151,66 +197,94 @@
 
         <p>This term looks complicated, but the key is that it's proportional to $\sqrt{\varepsilon}$, which is a very
             small number. It grows much slower than the main term.</p>
+
         <p><strong>Putting It Together</strong></p>
+
         <p>We have $r_{i,i+m+1} \ge (\text{Main Term}) - (\text{Penalty Term})$.</p>
+
         <p>$$r_{i,i+m+1} \ge \underbrace{\sqrt{c_1} t^{(m+1)/2}}_{\text{Dominant, exponential term}} -
             \underbrace{\sqrt{\varepsilon(1 - c_1(1-m\varepsilon))}}_{\text{Small, slowly growing term}}$$</p>
+
         <p>For a large $m$, the first term, which is exponential in $m$ (since $t \approx 1$), will be much, much
             larger than the second "penalty" term (which is proportional to the small constant $\sqrt{\varepsilon}$).
             Therefore, the overall behavior is dominated by the first term. This is what allows us to say:</p>
+
         <p>$$r_{i,i+m+1} = \Omega(t^{(m+1)/2})$$</p>
+
         <p>Squaring both sides (which is a valid operation for Big-Omega notation, as $f = \Omega(g) \implies f^2 =
             \Omega(g^2)$ for positive functions) gives the final result we wanted: $r_{i,i+m+1}^2 =
             \Omega(t^{m+1})$ !!!</p>
+
         <h2 id="from-chains-to-graphs">From Chains to Graphs</h2>
+
         <p>Real datasets are complex networks of interdependencies. When we construct a <strong>feature network</strong>
             G($t$) where vertices are features and edges connect features with R² ≥ $t$, something magical happens at
             high
             thresholds: the graph fragments into <strong>connected components</strong>.</p>
+
         <p>Each connected component is what RAVEN calls an <strong>elimination network</strong>: a cluster of mutually
             correlated features. The theorem above extends naturally: the information preserved between any two features
             in a network is bounded by $t$^(shortest_path_distance).</p>
+
         <p>This leads to a clean optimization problem: which single feature should we keep from each elimination
             network?</p>
+
         <h2 id="closeness-centrality">Closeness Centrality</h2>
+
         <p>RAVEN defines the <strong>Minimum Shared Explained Variance</strong> (MSEV) for a feature X as:</p>
+
         <p>$$\mathrm{MSEV}(X) = \frac{1}{n-1} \sum_Y t^{d(X,Y)}$$</p>
+
         <p>where d(X,Y) is the shortest path distance between features. This represents the average information X
             preserves about all other features in the network.</p>
+
         <p>What&#39;s remarkable is that <strong>maximizing MSEV is equivalent to finding the <a
                     href="https://en.wikipedia.org/wiki/Closeness_centrality">closeness center</a> of the
                 graph</strong>, the vertex that minimizes average distance to all others.</p>
+
         <p>Why? Because maximizing $\sum_Y t^{d(X,Y)}$
             is equivalent to minimizing $\sum_Y d(X,Y)$ (since $t$ &lt; 1, larger distances contribute less). The
             closeness centrality is defined as:</p>
+
         <p>$$C(X) = \frac{n-1}{\sum_Y d(X,Y)}$$</p>
+
         <p>The feature maximizing C(X) is precisely the one maximizing MSEV. Graph theory gives us the optimal feature
             selector!</p>
+
         <h2 id="where-did-i-even-come-up-with-this-">Where did I even come up with this?</h2>
+
         <p>I created this algorithm purely from an intuitive sense to make ClimSim small enough to experiment with
             transformer-based U-Nets for weather prediction. I figured temperature measurements at altitude levels 1000m
             and 1010m are probably redundant: keep one representative level.</p>
+
         <p>What I didn&#39;t expect was how <em>well</em> it would work. A 41% reduction with negligible performance
             loss seemed..too good to be true. So I dug into the mathematics. I found Langford&#39;s inequality in the
             depths of the internet, where I&#39;m genuinely surprised it&#39;s not part of a larger curriculum of
             statistics (maybe it is, just not in whatever sources I use to learn).</p>
+
         <p>So why does it work with Climsim? In datasets with natural physical hierarchies (like atmospheric
             measurements at different altitudes), features form chains and clusters with very high pairwise
             correlations. When $t$ = 0.99, we&#39;re guaranteeing that keeping the closeness center preserves at least
             0.99^d of the information about any feature at distance d.</p>
+
         <p>For a chain of 10 temperature measurements, the furthest feature is at distance 9, so we preserve at least
             0.99^9 ≈ 0.91 of its variance. That&#39;s a theoretical guarantee of less than 9% information loss. In
-            practice, the loss is often much smaller because features have multiple paths in the network.</p>
-        <p>The proof shows why graph-based feature selection works: correlation networks naturally capture semantic
-            relationships (like measurements of the same phenomenon), and closeness centrality provably
+            practice, the loss is often much smaller because features have multiple paths in the network, and
+            closeness centrality provably
             identifies the most representative feature. The exponential decay bound ( $t^k$ ) is tight enough to
             guarantee
             low information loss, yet loose enough to work with many datasets.</p>
+
         <p>This is the beauty of applied mathematics in machine learning: an intuitive algorithm that <em>works</em> can
             reveal deep mathematical structure. And that mathematical structure, in turn, explains why the intuition was
             correct.</p>
-        <p>The next time you see correlation matrices in your data, look for the chains and clusters. We made RAVEN an
-            importable python function, which you can find <a href="https://github.com/fringewidth/raven">here</a></p>
+
+        <p>We made RAVEN an
+            importable python function, which you can find <a href="https://github.com/fringewidth/raven">here</a>, so
+            the
+            next time you see correlation matrices in your data, you can look for the chains and clusters :&rpar;
+
+        </p>
     </main>
     <footer>
         <p>&copy; 2025 Hrishik Sai Bojnal. All rights reserved.</p>
